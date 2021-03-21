@@ -1,23 +1,27 @@
 const App = () => {
-	const course = 'Half Stack application development'
-	const part1 = 'Fundamentals of React'
-	const exercises1 = 10
-	const part2 = 'Using props to pass data'
-	const exercises2 = 7
-	const part3 = 'State of a component'
-	const exercises3 = 14
+	const course: Course = {
+		name: 'Half Stack application development',
+		parts: [
+			{
+				name: 'Fundamentals of React',
+				exercises: 10,
+			},
+			{
+				name: 'Using props to pass data',
+				exercises: 7,
+			},
+			{
+				name: 'State of a component',
+				exercises: 14,
+			},
+		],
+	}
 
 	return (
 		<div>
-			<Header course={course} />
-			<Content
-				parts={[
-					{ title: part1, exercises: exercises1 },
-					{ title: part2, exercises: exercises2 },
-					{ title: part3, exercises: exercises3 },
-				]}
-			/>
-			<Total exercises={[exercises1, exercises2, exercises3]} />
+			<Header course={course.name} />
+			<Content parts={course.parts} />
+			<Total parts={course.parts} />
 		</div>
 	)
 }
@@ -26,29 +30,37 @@ const Header = ({ course }: { course: string }) => {
 	return <h1>{course}</h1>
 }
 
-const Content = ({ parts }: { parts: PartType[] }) => {
+const Content = ({ parts }: Parts) => {
 	return (
 		<>
-			{parts.map(({ title, exercises }, k) => (
-				<Part key={k} title={title} exercises={exercises} />
+			{parts.map(({ name, exercises }, k) => (
+				<Part key={k} name={name} exercises={exercises} />
 			))}
 		</>
 	)
 }
 
-const Part = ({ title, exercises }: { title: string; exercises: number }) => (
+const Part = ({ name, exercises }: PartType) => (
 	<p>
-		{title} {exercises}
+		{name} {exercises}
 	</p>
 )
 
-const Total = ({ exercises }: { exercises: number[] }) => {
-	return <p>Number of exercises {exercises.reduce((a, b) => a + b, 0)}</p>
+const Total = ({ parts }: Parts) => {
+	return <p>Number of exercises {parts.reduce((a, b) => a + b.exercises, 0)}</p>
 }
 
 interface PartType {
-	title: string
+	name: string
 	exercises: number
+}
+
+interface Parts {
+	parts: PartType[]
+}
+
+interface Course extends Parts {
+	name: string
 }
 
 export default App
