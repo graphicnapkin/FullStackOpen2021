@@ -16,12 +16,14 @@ const Statistics: FC<{ moods: Moods[] }> = ({ moods }) => {
 
 	return (
 		<table>
-			{moods.map(({ label, val }, k) => (
-				<Statistic key={k} text={label} value={val} />
-			))}
-			<Statistic text={'all'} value={all} />
-			<Statistic text={'average'} value={average} />
-			<Statistic text={'all'} value={(positive / all) * 100 + '%'} />
+			<tbody>
+				{moods.map(({ label, val }, k) => (
+					<Statistic key={k} text={label} value={val} />
+				))}
+				<Statistic text={'all'} value={all} />
+				<Statistic text={'average'} value={average} />
+				<Statistic text={'all'} value={(positive / all) * 100 + '%'} />
+			</tbody>
 		</table>
 	)
 }
