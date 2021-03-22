@@ -33,7 +33,9 @@ const App: FC = () => {
 			<button onClick={handleVote}>vote</button>
 			<button onClick={handleNext}>next anecdote</button>
 			<h1>Anecdote with the most votes</h1>
-			{anecdotes[votes.indexOf(Math.max(...votes))]}
+			{Math.max(...votes) > 0
+				? anecdotes[votes.indexOf(Math.max(...votes))]
+				: 'No votes....'}
 		</>
 	)
 }
