@@ -7,10 +7,32 @@ const App = () => {
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' },
   ])
+  const [filter, setFilter] = useState('')
+
+  return (
+    <div>
+      <h1>Phonebook</h1>
+      <Filter setFilter={setFilter} />
+      <h2>add a new</h2>
+      <PersonForm setPersons={setPersons} persons={persons} />
+      <h2>Numbers</h2>
+      <Persons persons={persons} filter={filter} />
+    </div>
+  )
+}
+
+const Filter = ({ setFilter }: FilterType) => {
+  return (
+    <div>
+      filter show with{' '}
+      <input onChange={(e) => setFilter(e.target.value.toLowerCase())} />
+    </div>
+  )
+}
+
+const PersonForm = ({ setPersons, persons }: PersonFormProps) => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
-  const [search, setSearch] = useState('')
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const search = persons.find((person) => person.name === newName)
@@ -26,42 +48,57 @@ const App = () => {
     }
     window.alert(`${newName} is already added to the phonebook`)
   }
-
   return (
-    <div>
-      <h1>Phonebook</h1>
+    <form onSubmit={handleSubmit}>
       <div>
-        filter show with{' '}
-        <input onChange={(e) => setSearch(e.target.value.toLowerCase())} />
+        name:{' '}
+        <input onChange={(e) => setNewName(e.target.value)} value={newName} />
       </div>
-      <h2>add a new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name:{' '}
-          <input onChange={(e) => setNewName(e.target.value)} value={newName} />
-        </div>
-        <div>
-          phone:{' '}
-          <input
-            onChange={(e) => setNewPhone(e.target.value)}
-            value={newPhone}
-          />
-        </div>
-        <div>
-          <button type='submit'>add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
+      <div>
+        phone:{' '}
+        <input onChange={(e) => setNewPhone(e.target.value)} value={newPhone} />
+      </div>
+      <div>
+        <button type='submit'>add</button>
+      </div>
+    </form>
+  )
+}
+
+const Persons = ({ persons, filter }: PersonsType) => {
+  return (
+    <>
       {persons
-        .filter((person) => person.name.toLowerCase().includes(search))
+        .filter((person) => person.name.toLowerCase().includes(filter || ''))
         .map((person, i) => (
           <div key={i}>
             {person.name} : {person.number}
           </div>
         ))}
-      {`Name: ${newName}`}
-    </div>
+    </>
   )
 }
 
+interface PersonsType {
+  persons: {
+    name: string
+    number: string
+  }[]
+  filter?: string
+}
+
+interface PersonFormProps extends PersonsType {
+  setPersons: React.Dispatch<
+    React.SetStateAction<
+      {
+        name: string
+        number: string
+      }[]
+    >
+  >
+}
+
+interface FilterType {
+  setFilter: React.Dispatch<React.SetStateAction<string>>
+}
 export default App
