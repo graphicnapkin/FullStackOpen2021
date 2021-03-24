@@ -8,13 +8,13 @@ const PersonForm = ({ setPersons, persons }: PersonFormProps) => {
     e.preventDefault()
     const search = persons.find((person) => person.name === newName)
     if (!search) {
-      return setPersons([...persons, { name: newName, number: newPhone || '' }])
+      return setPersons([...persons, { name: newName, number: newPhone || '', id: 0 }])
     }
     if (search.number !== newPhone) {
       window.alert('Phone number updated!')
       return setPersons([
         ...persons.filter((person) => person.name !== newName),
-        { name: newName, number: newPhone || '' },
+        { name: newName, number: newPhone || '', id:0 },
       ])
     }
     window.alert(`${newName} is already added to the phonebook`)

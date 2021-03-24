@@ -1,18 +1,18 @@
+export interface People {
+  name: string,
+  number: string,
+  id: number
+}
+
 export interface PersonsType {
-  persons: {
-    name: string
-    number: string
-  }[]
+  persons: People[]
   filter?: string
 }
 
 export interface PersonFormProps extends PersonsType {
   setPersons: React.Dispatch<
     React.SetStateAction<
-      {
-        name: string
-        number: string
-      }[]
+      People[]
     >
   >
 }
