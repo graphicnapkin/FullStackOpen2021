@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { getAllCountries } from './services/api'
 import { CountryType } from './types'
-import { Country } from './App'
+import Country from './Country'
+import CountryList from './CountryList'
 
 const Results = ({ search }: { search: string }) => {
 	const [countries, setCountries] = useState<CountryType[]>([])
+	const [filter, setFilter] = useState<CountryType[]>([])
 
 	useEffect(() => {
 		;(async () => {
@@ -12,26 +14,29 @@ const Results = ({ search }: { search: string }) => {
 				const response = await getAllCountries()
 				setCountries(response)
 			}
+			if (search) {
+				setFilter(countries.filter((country) => country.name.match(search)))
+			}
 		})()
-	}, [countries])
+	}, [countries, search])
 
-	const filteredCountries: CountryType[] = countries.filter((country) =>
-		country.name.match(search)
-	)
-	if (!search) return <div>Search for a country by name...</div>
-	if (filteredCountries.length > 10)
+	if (!search) {
+		return <div>Search for a country by name...</div>
+	}
+
+	if (filter.length > 10) {
 		return <div>Too many matches, specify another filter</div>
+	}
 
-	if (filteredCountries.length > 1)
-		return (
-			<div>
-				{filteredCountries.map((country) => (
-					<div key={country.alpha2Code}>{country.name}</div>
-				))}
-			</div>
-		)
-	if (filteredCountries.length === 0) return <div>No countries found</div>
-	return <Country country={filteredCountries[0]} />
+	if (filter.length > 1) {
+		return <CountryList setFilter={setFilter} countries={filter} />
+	}
+
+	if (filter.length === 0) {
+		return <div>No countries found</div>
+	}
+
+	return <Country country={filter[0]} />
 }
 
 export default Results

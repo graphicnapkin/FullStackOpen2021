@@ -55,3 +55,8 @@ export interface SearchProps {
 	handleSearch: React.Dispatch<React.SetStateAction<string>>
 	search: string
 }
+
+export interface CountryListProps {
+	countries: CountryType[]
+	setFilter: React.Dispatch<React.SetStateAction<CountryType[]>>
+}
