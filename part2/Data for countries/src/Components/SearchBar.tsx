@@ -1,5 +1,5 @@
 import React from 'react'
-import { SearchProps } from './types'
+import { SearchProps } from '../types'
 
 const SearchBar = ({ handleSearch, search }: SearchProps) => {
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

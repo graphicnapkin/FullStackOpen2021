@@ -1,5 +1,5 @@
 import React from 'react'
-import { CountryType, CountryListProps } from './types'
+import { CountryType, CountryListProps } from '../types'
 
 const CountryList = ({ countries, setFilter }: CountryListProps) => {
 	const handleClick = (country: CountryType) => {

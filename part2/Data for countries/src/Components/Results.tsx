@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getAllCountries } from './services/api'
-import { CountryType } from './types'
+import { getAllCountries } from '../services/api'
+import { CountryType } from '../types'
 import Country from './Country'
 import CountryList from './CountryList'
 

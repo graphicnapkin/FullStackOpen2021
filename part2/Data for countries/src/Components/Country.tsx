@@ -1,5 +1,6 @@
 import React from 'react'
-import { CountryType } from './types'
+import { CountryType } from '../types'
+import { WeatherInfo } from './WeatherInfo'
 
 const Country = ({ country }: { country: CountryType }) => {
 	return (
@@ -14,6 +15,7 @@ const Country = ({ country }: { country: CountryType }) => {
 				)) || null}
 			</ul>
 			<img src={country.flag} alt="country flag" style={{ width: 250 }} />
+			<WeatherInfo capital={country.capital} />
 		</div>
 	)
 }
