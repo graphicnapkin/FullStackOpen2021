@@ -19,5 +19,9 @@ export const updatePerson = async (person: Person): Promise<Person> => {
 }
 
 export const deletePerson = async (person: Person) => {
-  await axios.delete(`${url}/${person.id}`)
+  try {
+    await axios.delete(`${url}/${person.id}`)
+  } catch (error) {
+    return 'error'
+  }
 }

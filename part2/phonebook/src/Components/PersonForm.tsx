@@ -2,7 +2,11 @@ import React, { useState } from 'react'
 import { PersonFormProps } from '../types'
 import { addPerson, updatePerson } from '../services/api'
 
-const PersonForm = ({ setPersons, persons }: PersonFormProps) => {
+const PersonForm = ({
+  setPersons,
+  persons,
+  setNotification,
+}: PersonFormProps) => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
 
@@ -11,6 +15,7 @@ const PersonForm = ({ setPersons, persons }: PersonFormProps) => {
     const search = persons.find((person) => person.name === newName)
     if (!search) {
       const newPerson = await addPerson({ name: newName, number: newPhone })
+      setNotification({ message: `Added ${newPerson.name}`, type: 'add' })
       return setPersons(persons.concat(newPerson))
     }
     if (search.number !== newPhone) {
@@ -20,7 +25,12 @@ const PersonForm = ({ setPersons, persons }: PersonFormProps) => {
           .filter((person) => person.id !== updatedPerson.id)
           .concat(updatedPerson)
       )
-      return window.alert('Phone number updated!')
+
+      setNotification({
+        message: `Updated ${updatedPerson.name}`,
+        type: 'update',
+      })
+      return
     }
     window.alert(`${newName} is already added to the phonebook`)
   }
