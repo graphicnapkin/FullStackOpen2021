@@ -1,7 +1,7 @@
 import React from 'react'
-import { FilterType } from './types'
+import { FilterProps } from '../types'
 
-const Filter = ({ setFilter }: FilterType) => {
+const Filter = ({ setFilter }: FilterProps) => {
   return (
     <div>
       filter show with{' '}

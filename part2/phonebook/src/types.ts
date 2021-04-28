@@ -1,22 +1,21 @@
-export interface People {
-  name: string,
-  number: string,
+export interface NewPerson {
+  name: string
+  number: string
+}
+
+export interface Person extends NewPerson {
   id: number
 }
-
-export interface PersonsType {
-  persons: People[]
+export interface PersonsProps {
+  persons: Person[]
   filter?: string
+  setPersons: React.Dispatch<React.SetStateAction<Person[]>>
 }
 
-export interface PersonFormProps extends PersonsType {
-  setPersons: React.Dispatch<
-    React.SetStateAction<
-      People[]
-    >
-  >
+export interface PersonFormProps extends PersonsProps {
+  setPersons: React.Dispatch<React.SetStateAction<Person[]>>
 }
 
-export interface FilterType {
+export interface FilterProps {
   setFilter: React.Dispatch<React.SetStateAction<string>>
 }

@@ -1,24 +1,30 @@
 import React, { useState } from 'react'
-import { PersonFormProps } from './types'
+import { PersonFormProps } from '../types'
+import { addPerson, updatePerson } from '../services/api'
 
 const PersonForm = ({ setPersons, persons }: PersonFormProps) => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const search = persons.find((person) => person.name === newName)
     if (!search) {
-      return setPersons([...persons, { name: newName, number: newPhone || '', id: 0 }])
+      const newPerson = await addPerson({ name: newName, number: newPhone })
+      return setPersons(persons.concat(newPerson))
     }
     if (search.number !== newPhone) {
-      window.alert('Phone number updated!')
-      return setPersons([
-        ...persons.filter((person) => person.name !== newName),
-        { name: newName, number: newPhone || '', id:0 },
-      ])
+      const updatedPerson = await updatePerson({ ...search, number: newPhone })
+      setPersons(
+        persons
+          .filter((person) => person.id !== updatedPerson.id)
+          .concat(updatedPerson)
+      )
+      return window.alert('Phone number updated!')
     }
     window.alert(`${newName} is already added to the phonebook`)
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
