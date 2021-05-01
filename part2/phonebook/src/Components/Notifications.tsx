@@ -15,9 +15,11 @@ const Notifications = ({
 
 const baseStyle: CSS.Properties = {
   border: 'solid',
+  width: 'fit-content',
   backgroundColor: 'lightgray',
-  padding: '10px',
-  marginBottom: '10px',
+  padding: '15px',
+  marginBottom: '20px',
+  borderRadius: '12px',
 }
 const add: CSS.Properties = {
   ...baseStyle,
