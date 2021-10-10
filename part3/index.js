@@ -25,14 +25,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
+var cors_1 = __importDefault(require("cors"));
 var app = (0, express_1["default"])();
+var persons_1 = __importDefault(require("./persons"));
+app.use(express_1["default"].static('build'));
+app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
 app.use((0, morgan_1["default"])(':method :url :status :total-time :body'));
 morgan_1["default"].token('body', function (request, response) {
     //@ts-ignore
     return JSON.stringify(request.body);
 });
-var persons_1 = __importDefault(require("./persons"));
 var currentPersons = __spreadArray([], persons_1["default"], true);
 app.get('/api/persons', function (_, response) {
     response.json(currentPersons);
@@ -91,6 +94,6 @@ var getPerson = function (id) {
 var personValidator = function (newPerson) {
     return !currentPersons.some(function (currentPerson) { return currentPerson.name === newPerson.name; });
 };
-var PORT = 3001;
+var PORT = process.env.PORT || 3001;
 app.listen(PORT);
 console.log("Server running on port " + PORT);

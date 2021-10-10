@@ -1,4 +1,4 @@
-const persons: Person[] = [
+const persons: PersonType[] = [
   {
     id: 1,
     name: 'Arto Hellas',
@@ -21,7 +21,7 @@ const persons: Person[] = [
   },
 ];
 
-export interface Person {
+export interface PersonType {
   name: string;
   number: string;
   id: number;
